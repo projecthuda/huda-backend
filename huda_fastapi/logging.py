@@ -42,7 +42,7 @@ class InterceptHandler(logging.Handler):
 
 
 def configure_logging() -> None:  # pragma: no cover
-    """Configures logging. For the application."""
+    """Configures logging."""
     intercept_handler = InterceptHandler()
 
     logging.basicConfig(handlers=[intercept_handler], level=logging.NOTSET)

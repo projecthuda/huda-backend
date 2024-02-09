@@ -26,6 +26,7 @@ psycopg2-binary = "^2.9.6"
 aiofiles = "^23.1.0"
 httptools = "^0.6.0"
 loguru = "^0.7.0"
+flake8-typing-imports = "1.10.0"
 
 
 

@@ -653,6 +653,20 @@ files = [
 flake8 = "*"
 
 [[package]]
+name = "flake8-typing-imports"
+version = "1.10.0"
+description = "flake8 plugin which checks that typing imports are properly guarded"
+optional = false
+python-versions = ">=3.6.1"
+files = [
+    {file = "flake8_typing_imports-1.10.0-py2.py3-none-any.whl", hash = "sha256:566dc5542b607bc927487628d45b8697673b26edcf5a3232082e269bfb525e06"},
+    {file = "flake8_typing_imports-1.10.0.tar.gz", hash = "sha256:46558157f9bfa3a9ff371429c6de65e77d282cc3ab5c37af4828104ec586bf2a"},
+]
+
+[package.dependencies]
+flake8 = ">=3.7"
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -2390,4 +2404,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "c4262556ebe639d4d4a728a1e791202aec3309863ef26709db84524356b04442"
+content-hash = "17255a1546a214f59d5244db3ebe59492cc5882082d8b82b378437545754fbdd"

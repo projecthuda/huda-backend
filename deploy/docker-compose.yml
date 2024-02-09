@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+      target: prod
+    image: huda_fastapi:${HUDA_FASTAPI_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      HUDA_FASTAPI_HOST: 0.0.0.0
+      HUDA_FASTAPI_DB_HOST: huda_fastapi-db
+      HUDA_FASTAPI_DB_PORT: 5432
+      HUDA_FASTAPI_DB_USER: huda_fastapi
+      HUDA_FASTAPI_DB_PASS: huda_fastapi
+      HUDA_FASTAPI_DB_BASE: huda_fastapi
+
+  db:
+    image: postgres:13.8-bullseye
+    hostname: huda_fastapi-db
+    environment:
+      POSTGRES_PASSWORD: "huda_fastapi"
+      POSTGRES_USER: "huda_fastapi"
+      POSTGRES_DB: "huda_fastapi"
+    volumes:
+    - huda_fastapi-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U huda_fastapi
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  migrator:
+    image: huda_fastapi:${HUDA_FASTAPI_VERSION:-latest}
+    restart: "no"
+    command: alembic upgrade head
+    environment:
+      HUDA_FASTAPI_DB_HOST: huda_fastapi-db
+      HUDA_FASTAPI_DB_PORT: 5432
+      HUDA_FASTAPI_DB_USER: huda_fastapi
+      HUDA_FASTAPI_DB_PASS: huda_fastapi
+      HUDA_FASTAPI_DB_BASE: huda_fastapi
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+
+volumes:
+  huda_fastapi-db-data:
+    name: huda_fastapi-db-data
